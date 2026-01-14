@@ -1,0 +1,81 @@
+flowchart TB
+    EventBus[("EVENT BUS")]
+
+    subgraph Identity[IDENTITY & ACCESS]
+        direction TB
+        ID_SVC[Identity & Access]
+    end
+
+    subgraph MasterData[MASTER DATA]
+        direction TB
+        MD_SVC[Master Data]
+    end
+
+    subgraph Quotation[QUOTATION]
+        direction TB
+        Q_SVC[Quotation]
+    end
+
+    subgraph Proforma[PROFORMA / DELIVERY]
+        direction TB
+        P_SVC[Proforma/Delivery]
+    end
+
+    subgraph Billing[BILLING & TAX]
+        direction TB
+        B_SVC[Billing & Tax]
+    end
+
+    subgraph AR[ACCOUNTS RECEIVABLE]
+        direction TB
+        AR_SVC[Accounts Receivable]
+    end
+
+    subgraph Documents[DOCUMENTS]
+        direction TB
+        D_SVC[Documents]
+    end
+
+    subgraph Notifications[NOTIFICATIONS]
+        direction TB
+        N_SVC[Notifications]
+    end
+
+    subgraph Analytics[ANALYTICS / BI]
+        direction TB
+        A_SVC[Analytics/BI]
+    end
+
+    subgraph AI[AI ASSIST]
+        AI_SVC[AI Assist]
+    end
+
+    subgraph OfflineSync[OFFLINE SYNC]
+        direction TB
+        OS_SVC[Offline Sync]
+    end
+
+    ID_SVC -.-> EventBus
+    MD_SVC -.-> EventBus
+    Q_SVC -.-> EventBus
+    P_SVC -.-> EventBus
+    B_SVC -.-> EventBus
+    AR_SVC -.-> EventBus
+    D_SVC -.-> EventBus
+    N_SVC -.-> EventBus
+    OS_SVC -.-> EventBus
+
+    EventBus -.-> AR_SVC
+    EventBus -.-> N_SVC
+    EventBus -.-> A_SVC
+    EventBus -.-> AI_SVC
+
+    classDef coreService fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    classDef fiscalService fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    classDef supportService fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef eventBusStyle fill:#ffccbc,stroke:#d84315,stroke-width:3px,color:#000
+
+    class ID_SVC,MD_SVC,Q_SVC,P_SVC coreService
+    class B_SVC fiscalService
+    class AR_SVC,D_SVC,N_SVC,A_SVC,AI_SVC,OS_SVC supportService
+    class EventBus eventBusStyle

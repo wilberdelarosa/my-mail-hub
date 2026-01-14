@@ -1,0 +1,110 @@
+    
+    
+  TEMA COMENTADO
+Prioridad:
+Normal
+Asignado a:
+Patricia Gisela Mendoza Orellana
+Categoría:
+-
+Fecha de inicio:
+20 Septiembre 2025
+Fecha fin:
+% Realizado:
+20%
+
+Extensión de la UCE:
+Punta Cana
+Matrícula del autor:
+2022-0547
+
+Jurado 1:
+Jurado 2:
+Co-autor 1:
+Jesus Andres Acevedo Carrasco
+
+Matrícula del co-autor 1:
+2020-2551
+
+Correo del Co-autor 1:
+ja2020-2551@uce.edu.do
+Co-autor 2:
+Matrícula del co-autor 2:
+Correo del Co-autor 2:
+Asesor:
+RAMON EDUARDO ZORRILLA MATEO
+Métodos y Técnicas de Inv.:
+Analítico-Sintético, Causa Efecto(Diagrama de Ishikawa), Entrevista, Estudio de casos, Hipotético-Deductivo, Métodos estadísticos, Observación
+  
+  
+    titulo del Proyecto
+    
+    Arquitectura y desarrollo de un sistema de facturación cloud impulsado por agentes de IA para ALITO GROUP SRL, Bávaro – Punta Cana (2025).
+    
+    
+    Justificación e Importancia
+
+Justificación del Proyecto
+El desarrollo de un sistema de facturación en la nube gestionado mediante agentes de inteligencia artificial se justifica en la necesidad crítica de modernizar, sistematizar y centralizar los procesos financieros y administrativos de ALITO GROUP SRL.
+
+Actualmente, la empresa depende de hojas de cálculo Excel y procesos manuales que generan errores recurrentes en la numeración de facturas, en los cálculos del ITBIS (18%) y en la gestión de comprobantes fiscales (NCF). Esta situación expone a la organización a riesgos fiscales, sanciones tributarias, retrasos en la atención a clientes y pérdida de credibilidad en el mercado.
+
+La implementación de un sistema en la nube con inteligencia artificial permitirá:
+Eliminar duplicidades y errores humanos, ya que los cálculos y numeraciones se controlarán automáticamente.
+Garantizar cumplimiento fiscal, mediante la validación en tiempo real de NCF y la correcta aplicación de impuestos.
+Agilizar los procesos administrativos, generando cotizaciones, proformas y facturas en menor tiempo y con mayor precisión.
+Mejorar la trazabilidad documental, centralizando toda la información en una única plataforma accesible para todas las áreas.
+Optimizar la gestión financiera, mediante estados de cuenta consolidados y reportes automáticos en tiempo real.
+Incorporar herramientas de inteligencia de negocios (BI), que permitan a la gerencia tomar decisiones basadas en hechos y no en estimaciones.
+En términos académicos, este proyecto contribuye a la aplicación práctica de conocimientos en ingeniería de software, arquitectura en la nube, bases de datos, business intelligence y agentes inteligentes, respondiendo a la demanda de soluciones digitales innovadoras en el sector de la construcción y alquiler de equipos pesados.
+
+Importancia del Proyecto
+La importancia del proyecto se fundamenta en varios niveles:
+Importancia Empresarial:
+Permite a ALITO GROUP SRL modernizar sus operaciones y alinearse con la transformación digital que exige el mercado.
+Garantiza la transparencia y seguridad de la información financiera, minimizando riesgos de pérdidas o fraudes.
+Importancia Operativa:
+Centraliza la información en la nube, facilitando acceso inmediato y colaborativo desde cualquier ubicación.
+Ofrece rapidez y confiabilidad en la generación de cotizaciones, proformas y facturas, reduciendo tiempos de respuesta a clientes.
+Mejora la planificación y control de cuentas por cobrar y por pagar, fortaleciendo la estabilidad financiera.
+Importancia Tecnológica:
+Incorpora agentes de inteligencia artificial que automatizan tareas repetitivas, reducen errores y generan recomendaciones.
+Integra herramientas de BI y analítica avanzada, brindando reportes inteligentes para la toma de decisiones estratégicas.
+Utiliza tecnologías escalables en la nube, asegurando flexibilidad y sostenibilidad en el tiempo.
+Importancia Académica y Social:
+Aporta un caso real de aplicación de conocimientos adquiridos en Ingeniería en Software, fortaleciendo la formación profesional.
+Promueve el uso de tecnologías emergentes (IA, sistemas en la nube, BI) en el contexto local de Bávaro – Punta Cana.
+Contribuye al desarrollo de empresas de la región mediante la introducción de soluciones tecnológicas modernas.
+Problema científico
+
+¿Cómo diseñar e implementar un sistema de facturación en la nube, gestionado mediante agentes de inteligencia artificial, que permita centralizar la información, garantizar la exactitud fiscal y agilizar la generación de documentos (cotizaciones, proformas, facturas y estados de cuenta) en ALITO GROUP SRL, contribuyendo a la mejora de su eficiencia operativa, la toma de decisiones estratégicas y el cumplimiento normativo?
+
+Objetivos
+
+Objetivo General
+
+Diseñar e implementar un Sistema de Gestión Integral con Inteligencia Artificial para ALITO GROUP SRL, que permita sistematizar y centralizar los procesos de cotización, proformas, facturación y estados de cuenta, garantizando la exactitud fiscal, reduciendo errores y mejorando la eficiencia operativa y la toma de decisiones estratégicas.
+
+Objetivos Específicos
+
+Analizar los procesos actuales de gestión administrativa y financiera de ALITO GROUP SRL, identificando deficiencias en facturación, control documental, duplicidad de datos y falta de consolidación de información.
+Diseñar la arquitectura del sistema de facturación en la nube, contemplando los módulos de cotización, proformas, facturación, control de NCF, aplicación del ITBIS (18%) y generación de estados de cuenta consolidados.
+Integrar herramientas de Inteligencia Artificial que permitan validar datos automáticamente, reducir errores de numeración y cálculo, detectar inconsistencias en tiempo real y apoyar la trazabilidad documental.
+Desarrollar funciones de Business Intelligence (BI) que proporcionen reportes dinámicos e indicadores de desempeño sobre cuentas por cobrar, ingresos, eficiencia operativa y control fiscal.
+Implementar mecanismos de centralización de la información, eliminando la dependencia de hojas de Excel dispersas y garantizando la disponibilidad de un único repositorio confiable.
+Evaluar el impacto del sistema propuesto en términos de reducción de errores, tiempos de respuesta y satisfacción del cliente interno y externo, mediante pruebas piloto y recolección de indicadores.
+Capacitar al personal de la empresa en el uso del sistema de facturación inteligente, asegurando su adopción efectiva y la sostenibilidad del proyecto en el tiempo.
+Bibliografía
+
+Bibliografía
+Microsoft Corporation. (2024). Power BI documentation. Microsoft. Recuperado de [https://powerbi.microsoft.com](https://powerbi.microsoft.com)
+
+n8n GmbH. (2024). n8n documentation. n8n.io. Recuperado de [https://docs.n8n.io](https://docs.n8n.io)
+
+Odoo S.A. (2024). Odoo documentation. Odoo. Recuperado de [https://www.odoo.com/documentation](https://www.odoo.com/documentation)
+
+Dirección General de Impuestos Internos. (2024). Normativa tributaria sobre comprobantes fiscales (NCF) y facturación electrónica en República Dominicana. DGII. Recuperado de [https://dgii.gov.do](https://dgii.gov.do)
+
+International Organization for Standardization. (2015). ISO 9001:2015 – Sistemas de gestión de la calidad. ISO.
+
+Universidad Central del Este. (2024). Guía para la presentación de proyectos integradores en ingeniería. UCE.

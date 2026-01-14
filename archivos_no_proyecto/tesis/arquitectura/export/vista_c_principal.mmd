@@ -1,0 +1,62 @@
+sequenceDiagram
+    autonumber
+    participant Cliente
+    participant WA as WhatsApp/Web
+    participant GW as API Gateway
+    participant Q as Quotation
+    participant P as Proforma
+    participant B as Billing & Tax
+    participant D as Documents
+    participant N as Notifications
+    participant AR as Accounts Receivable
+    participant BI as Analytics/BI
+
+    Cliente->>WA: Solicitar cotizacion
+    WA->>GW: RequestQuote
+    GW->>Q: Crear cotizacion
+    Q-->>GW: QuoteRequested
+    Q-->>Cliente: Cotizacion en revision
+
+    Cliente->>WA: Aprobar cotizacion
+    WA->>GW: ApproveQuote
+    GW->>Q: Aprobar
+    Q-->>GW: QuoteApproved
+    Q-->>Cliente: Cotizacion aprobada
+
+    GW->>P: CreateProformaFromQuote
+    P-->>GW: ProformaCreated
+    loop Parcialidades
+        Cliente->>WA: Registrar entrega parcial
+        WA->>GW: RecordDelivery
+        GW->>P: Actualizar proforma
+        P-->>GW: DeliveryRecorded
+    end
+    WA->>GW: CloseProforma
+    GW->>P: Cerrar proforma
+    P-->>GW: ProformaClosed
+
+    GW->>B: PreviewInvoice
+    B-->>GW: Vista previa
+    WA->>GW: Confirmar emision
+    GW->>B: IssueInvoice
+    B->>B: Validar ITBIS + NCF
+    B->>B: Asignar NCF
+    B-->>GW: InvoiceIssued
+
+    GW->>D: RenderDocument(invoice)
+    D->>D: Generar PDF
+    D->>D: Guardar en S3
+    D-->>GW: DocumentRendered + Link
+
+    GW->>N: Enviar factura
+    N->>N: WhatsApp/Email
+    N-->>GW: InvoiceSent
+    N-->>Cliente: Factura + link
+
+    B-->>AR: InvoiceIssued (evento)
+    AR->>AR: Registrar CxC
+    AR-->>GW: PaymentApplied
+
+    B-->>BI: InvoiceIssued (evento)
+    P-->>BI: ProformaClosed (evento)
+    AR-->>BI: PaymentApplied (evento)

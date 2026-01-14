@@ -1,0 +1,22 @@
+[31m[Nest] 453952  - [39m14/01/2026, 13:18:32 [31m  ERROR[39m [38;5;3m[NestApplication] [39m[31mError: listen EADDRINUSE: address already in use :::3001[39m[38;5;3m +6ms[39m
+node:net:1937
+    const ex = new UVExceptionWithHostPort(err, 'listen', address, port);
+               ^
+
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1937:16)
+    at listenInCluster (node:net:1994:12)
+    at Server.listen (node:net:2099:7)
+    at ExpressAdapter.listen (C:\Users\wilbe\Downloads\TESISFACTURACION\sistema_facturacion\services\identity-service\node_modules\@nestjs\platform-express\adapters\express-adapter.js:127:32)
+    at C:\Users\wilbe\Downloads\TESISFACTURACION\sistema_facturacion\services\identity-service\node_modules\@nestjs\core\nest-application.js:188:30
+    at new Promise (<anonymous>)
+    at NestApplication.listen (C:\Users\wilbe\Downloads\TESISFACTURACION\sistema_facturacion\services\identity-service\node_modules\@nestjs\core\nest-application.js:178:16)
+    at async bootstrap (C:\Users\wilbe\Downloads\TESISFACTURACION\sistema_facturacion\services\identity-service\src\main.ts:51:3) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3001
+}
+
+Node.js v22.14.0

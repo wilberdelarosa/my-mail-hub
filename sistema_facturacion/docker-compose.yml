@@ -1,0 +1,173 @@
+# Docker Compose COMPLEMENTARIO para Supabase
+# ============================================
+# Supabase Local ya provee:
+# - PostgreSQL (puerto 54322)
+# - PostgREST API (puerto 54321)
+# - Auth GoTrue (puerto 54321)
+# - Storage API (puerto 54321)
+# - Realtime (WebSocket)
+# - Studio UI (puerto 54323)
+#
+# Este compose agrega:
+# - RabbitMQ (Event Bus)
+# - Redis (Cache + Sessions)
+# - Kong (API Gateway)
+# - Prometheus + Grafana (Observabilidad)
+# - Jaeger (Distributed Tracing)
+
+services:
+  # ============================================
+  # EVENT BUS (RabbitMQ)
+  # ============================================
+  rabbitmq:
+    container_name: alito-rabbitmq
+    image: rabbitmq:3.12-management-alpine
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: alito
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-alito_dev_2026}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - alito-network
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # CACHE + SESSIONS (Redis)
+  # ============================================
+  redis:
+    container_name: alito-redis
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - alito-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # API GATEWAY (Kong)
+  # ============================================
+  kong:
+    container_name: alito-kong
+    image: kong:3.4
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+    volumes:
+      - ./infrastructure/api-gateway/kong.yml:/kong/declarative/kong.yml:ro
+    ports:
+      - "8000:8000" # Proxy HTTP
+      - "8443:8443" # Proxy HTTPS
+      - "8001:8001" # Admin API
+      - "8444:8444" # Admin API HTTPS
+    networks:
+      - alito-network
+    depends_on:
+      - redis
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # OBSERVABILITY - Prometheus
+  # ============================================
+  prometheus:
+    container_name: alito-prometheus
+    image: prom/prometheus:latest
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./infrastructure/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - alito-network
+    restart: unless-stopped
+
+  # ============================================
+  # OBSERVABILITY - Grafana
+  # ============================================
+  grafana:
+    container_name: alito-grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./infrastructure/observability/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./infrastructure/observability/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - alito-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  # ============================================
+  # DISTRIBUTED TRACING - Jaeger
+  # ============================================
+  jaeger:
+    container_name: alito-jaeger
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "5775:5775/udp" # Compact thrift (deprecated)
+      - "6831:6831/udp" # Compact thrift
+      - "6832:6832/udp" # Binary thrift
+      - "5778:5778" # Serve configs
+      - "17686:16686" # UI (puerto 17686 en host)
+      - "14250:14250" # gRPC
+      - "14268:14268" # HTTP thrift
+      - "14269:14269" # HTTP health check
+      - "9411:9411" # Zipkin compatible
+    networks:
+      - alito-network
+    restart: unless-stopped
+
+# ============================================
+# VOLUMES
+# ============================================
+volumes:
+  rabbitmq-data:
+    driver: local
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  alito-network:
+    driver: bridge
+    name: alito-network

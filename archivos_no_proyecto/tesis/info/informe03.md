@@ -1,0 +1,24 @@
+El sistema de facturación analizado en las fuentes se define como una solución tecnológica web avanzada que integra automatización e inteligencia artificial (IA) para optimizar la gestión operativa de empresas de equipo pesado1. Su diseño se fundamenta en una infraestructura técnica robusta que prioriza la independencia de funciones y la continuidad del negocio.
+A continuación, se detalla la arquitectura y las tecnologías clave que sustentan este sistema:
+
+1. Estrategia Arquitectónica: Microservicios y Arquitectura Hexagonal
+   El sistema no se concibe como un bloque único (monolito), sino como un ecosistema de componentes independientes:
+   • Microservicios Modulares: El sistema se divide en tres núcleos principales: Cotización, Proforma y Factura2. Cada uno posee su propia lógica y base de datos (o tablas específicas), comunicándose entre sí mediante peticiones rápidas a través de APIs2....
+   • Independencia y Resiliencia: Esta estructura garantiza que, si un canal o módulo falla (por ejemplo, si se cae la integración de WhatsApp), los demás servicios, como la plataforma web o la facturadora manual, sigan operativos sin corromper el sistema completo4....
+   • Arquitectura Hexagonal: Se implementa para separar estrictamente la lógica de negocio de las implementaciones externas36. Esto permite que el sistema sea flexible para integrar nuevas funciones, llamadas a APIs y automatizaciones sin alterar el núcleo del programa67.
+2. Conectividad y Persistencia de Datos
+   Una característica crítica es su capacidad para operar en entornos de conectividad inestable:
+   • Modo Offline Tipo "Commit": El sistema permite el registro de datos sin conexión a internet, funcionando de manera similar a los commits de Git, donde la información se almacena localmente hasta que la conexión se restablece89.
+   • Sincronización Inteligente: Al recuperar la conexión, el sistema dispara triggers y validaciones automáticas para subir los datos pendientes1011. Para evitar conflictos de duplicidad, el servidor envía la última secuencia numérica (ej. número de cotización) y el cliente local ajusta los nuevos registros a partir de ese punto1112.
+   • Optimización del Almacenamiento: Para no saturar la base de datos con archivos pesados (PDFs), el sistema genera documentos y los almacena en Google Drive1314. El cliente recibe un enlace de previsualización y descarga, mientras que el sistema solo conserva registros de texto plano para fines de auditoría15....
+3. Ecosistema Tecnológico y Desarrollo Asistido
+   El desarrollo del proyecto se apoya en una pila tecnológica moderna y herramientas de vanguardia:
+   • Stack Tecnológico: El frontend se desarrolla en React, mientras que las notificaciones y flujos lógicos externos son gestionados por N8N (para envíos por WhatsApp y correo)37.
+   • Inteligencia Artificial Aplicada: Se utiliza IA para la extracción automática de datos desde órdenes de compra enviadas por WhatsApp y para la identificación/corrección de nombres de clientes que puedan tener errores tipográficos1819.
+   • Herramientas de IA para Programación: El equipo utiliza un conjunto de herramientas avanzadas para acelerar la codificación y resolver errores complejos, incluyendo GitHub Copilot Pro, Gemini Pro, Antigravity (que da acceso a Claude 3.5), y Lovable20....
+   • Metodología de Desarrollo: Se adopta un enfoque de código modular y pequeño (evitando bloques de más de 1,000 líneas), lo que facilita que las herramientas de IA analicen y mantengan el código de manera más efectiva25.
+4. Lógica Operativa e Inteligencia de Negocio
+   • Gestión de Inventario Dinámico: El sistema puede rastrear la disponibilidad de equipos (ej. minicargadores). Si el stock llega a cero, el botón de cotización se deshabilita automáticamente para evitar pedidos que no se puedan cumplir2627.
+   • Validaciones y Seguridad Fiscal: El módulo de facturación incluye un proceso de validación de tres pasos antes de emitir un Comprobante Fiscal (NCF), asegurando que solo se facture una vez que el pago haya sido validado frente a la proforma28....
+   • Invalidación por Tiempo: Debido a la fluctuación de precios en el mercado, las cotizaciones tienen una validez de 15 a 30 días; pasado este tiempo, el sistema las invalida automáticamente y ofrece la opción de "regenerar" con precios actualizados14....
+   Metáfora para entender el sistema: La arquitectura de este sistema es como un gran portaaviones moderno. Cada microservicio es una sección estanca del barco: si una parte sufre un daño o inundación (una falla técnica), las puertas se sellan y el resto del barco sigue navegando sin hundirse. La arquitectura hexagonal es como el sistema de puertos universales del barco, que permite conectar cualquier tipo de helicóptero o suministro externo (tecnologías futuras) sin tener que rediseñar los motores principales.

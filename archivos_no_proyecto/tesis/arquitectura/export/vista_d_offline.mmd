@@ -1,0 +1,66 @@
+flowchart TB
+    subgraph Cliente["CLIENTE (OFFLINE)"]
+        AppOffline["App Cliente\n(Sin internet)"]
+        LocalCache["Cache Local\n(IndexedDB)"]
+        UUIDGen["Generador UUID\n(IdempotencyKey)"]
+    end
+
+    subgraph SyncSvc["OFFLINE SYNC SERVICE"]
+        ReceiveBatch["ReceiveBatch\n(SubmitBatch)"]
+        ValidateIdem["ValidateIdempotency"]
+        ConflictDetector["ConflictDetector"]
+        ApplyBatch["ApplyBatch"]
+    end
+
+    subgraph EventBusOffline["EVENT BUS"]
+        EB["Event Bus"]
+    end
+
+    subgraph Core["SERVICIOS CORE"]
+        Q["Quotation"]
+        P["Proforma"]
+        MD["Master Data"]
+    end
+
+    subgraph Response["RESPUESTA"]
+        Success["Success:\nBatch aplicado"]
+        Conflict["Conflict:\nUUID duplicado"]
+        Error["Error:\nValidacion fallida"]
+    end
+
+    AppOffline -->|"1. Captura offline"| LocalCache
+    LocalCache -->|"2. Genera UUID"| UUIDGen
+    UUIDGen -->|"3. Sincroniza"| ReceiveBatch
+
+    ReceiveBatch -->|"4. Valida UUID"| ValidateIdem
+    ValidateIdem -->|"UUID nuevo"| ApplyBatch
+    ValidateIdem -->|"UUID duplicado"| ConflictDetector
+
+    ApplyBatch -->|"5. Publica eventos"| EB
+    EB -->|"6. Propaga"| Q
+    EB --> P
+    EB --> MD
+
+    ConflictDetector --> Conflict
+    ApplyBatch --> Success
+    ValidateIdem -->|"Validacion fallida"| Error
+
+    Success -->|"7. Responde"| AppOffline
+    Conflict --> AppOffline
+    Error --> AppOffline
+
+    classDef offlineStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef syncStyle fill:#fff3e0,stroke:#f57f00,stroke-width:2px,color:#000
+    classDef eventStyle fill:#ffccbc,stroke:#d84315,stroke-width:2px,color:#000
+    classDef coreStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef successStyle fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef warningStyle fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    classDef errorStyle fill:#ffccbc,stroke:#c62828,stroke-width:2px,color:#000
+
+    class AppOffline,LocalCache,UUIDGen offlineStyle
+    class ReceiveBatch,ValidateIdem,ConflictDetector,ApplyBatch syncStyle
+    class EB eventStyle
+    class Q,P,MD coreStyle
+    class Success successStyle
+    class Conflict warningStyle
+    class Error errorStyle

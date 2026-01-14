@@ -1,0 +1,117 @@
+_format_version: "3.0"
+_transform: true
+
+# ============================================
+# API Gateway Kong - ALITO GROUP
+# ============================================
+# Enruta tráfico a:
+# - Supabase PostgREST (CRUD automático)
+# - Microservicios custom (Hexagonal + Swagger)
+
+services:
+  # ==========================================
+  # SUPABASE PostgREST
+  # ==========================================
+  - name: supabase-rest
+    url: http://host.docker.internal:54321
+    routes:
+      - name: supabase-rest-route
+        paths:
+          - /rest
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "http://localhost:3000"
+            - "http://127.0.0.1:3000"
+          methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          headers:
+            - Authorization
+            - Content-Type
+          credentials: true
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local
+
+  # ==========================================
+  # AUTH Service (Supabase GoTrue)
+  # ==========================================
+  - name: supabase-auth
+    url: http://host.docker.internal:54321
+    routes:
+      - name: supabase-auth-route
+        paths:
+          - /auth
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "http://localhost:3000"
+          credentials: true
+
+  # ==========================================
+  # STORAGE Service (Supabase Storage)
+  # ==========================================
+  - name: supabase-storage
+    url: http://host.docker.internal:54321
+    routes:
+      - name: supabase-storage-route
+        paths:
+          - /storage
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "http://localhost:3000"
+          credentials: true
+
+# ==========================================
+# MICROSERVICIOS CUSTOM (se agregarán luego)
+# ==========================================
+
+# Ejemplo: Quotation Service (cuando esté listo)
+# - name: quotation-service
+#   url: http://quotation-service:3002
+#   routes:
+#     - name: quotation-api
+#       paths:
+#         - /api/quotation
+#       strip_path: false
+#     - name: quotation-docs
+#       paths:
+#         - /api/quotation/api-docs
+#       strip_path: false
+#   plugins:
+#     - name: jwt
+#       config:
+#         uri_param_names:
+#           - jwt
+#     - name: cors
+
+# Ejemplo: Billing Service (cuando esté listo)
+# - name: billing-service
+#   url: http://billing-service:3005
+#   routes:
+#     - name: billing-api
+#       paths:
+#         - /api/billing
+#       strip_path: false
+#     - name: billing-docs
+#       paths:
+#         - /api/billing/api-docs
+#       strip_path: false
+#   plugins:
+#     - name: jwt
+#     - name: rate-limiting
+#       config:
+#         minute: 50  # Más restrictivo (operaciones críticas)

@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> QuoteRequested: Solicitud
+    QuoteRequested --> QuoteApproved: Aprobacion
+    QuoteApproved --> ValidityCheck: Verificacion automatica
+    ValidityCheck --> QuoteActive: Vigente (15-30 dias)
+    ValidityCheck --> QuoteExpired: Expirada (> 30 dias)
+    QuoteExpired --> QuoteRegenerated: RegenerateQuote
+    QuoteRegenerated --> QuoteApproved: Reaprobacion
+    QuoteActive --> [*]: Convertir a Proforma
+    QuoteApproved --> [*]: Convertir a Proforma
+
+    note right of QuoteExpired
+        Se regenera con
+        tarifas vigentes
+    end note

@@ -1,0 +1,97 @@
+flowchart TB
+    subgraph Externos["ACTORES EXTERNOS"]
+        ClienteExt["Cliente Externo"]
+        OperadorInt["Operador Interno"]
+    end
+
+    subgraph Canales["CANALES DE ENTRADA"]
+        WebApp["Web App\n(SPA / React)"]
+        WhatsAppBot["WhatsApp Bot\n(Webhook)"]
+    end
+
+    subgraph FronteraSistema["FRONTERA SISTEMA INTERNO"]
+        APIGateway["API Gateway / BFF"]
+
+        subgraph HexagonalCore["HEXAGONAL CORE"]
+            direction LR
+            MS1["Identity"]
+            MS2["Master Data"]
+            MS3["Quotation"]
+            MS4["Proforma"]
+            MS5["Billing"]
+            MS6["AR"]
+            MS7["Documents"]
+            MS8["Notifications"]
+            MS9["Analytics"]
+            MS10["AI Assist"]
+            MS11["Offline Sync"]
+        end
+
+        EventBus["Event Bus"]
+        AuditLog["Audit Log"]
+        Observabilidad["Observabilidad"]
+    end
+
+    subgraph ServiciosExternos["SERVICIOS EXTERNOS"]
+        DriveS3["Drive/S3"]
+        WhatsAppEmail["WhatsApp/Email"]
+        N8N["n8n"]
+    end
+
+    ClienteExt -->|Solicitudes| WebApp
+    ClienteExt -->|Mensajes| WhatsAppBot
+    OperadorInt -->|Gestion| WebApp
+
+    WebApp --> APIGateway
+    WhatsAppBot --> APIGateway
+
+    APIGateway --> MS1
+    APIGateway --> MS2
+    APIGateway --> MS3
+    APIGateway --> MS4
+    APIGateway --> MS5
+    APIGateway --> MS6
+    APIGateway --> MS7
+    APIGateway --> MS8
+    APIGateway --> MS9
+    APIGateway --> MS10
+    APIGateway --> MS11
+
+    MS1 -.-> EventBus
+    MS2 -.-> EventBus
+    MS3 -.-> EventBus
+    MS4 -.-> EventBus
+    MS5 -.-> EventBus
+    MS6 -.-> EventBus
+    MS7 -.-> EventBus
+    MS8 -.-> EventBus
+    MS11 -.-> EventBus
+
+    MS1 -.-> AuditLog
+    MS5 -.-> AuditLog
+    MS6 -.-> AuditLog
+
+    APIGateway -.-> Observabilidad
+    EventBus -.-> Observabilidad
+
+    MS7 --> DriveS3
+    MS8 --> WhatsAppEmail
+    MS8 --> N8N
+
+    EventBus -.-> MS8
+    EventBus -.-> MS9
+    EventBus -.-> MS10
+
+    classDef externosStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef canalesStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
+    classDef fronteraStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
+    classDef coreStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef externosServStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000
+    classDef infraStyle fill:#eceff1,stroke:#455a64,stroke-width:2px,color:#000
+
+    class ClienteExt,OperadorInt externosStyle
+    class WebApp,WhatsAppBot canalesStyle
+    class APIGateway fronteraStyle
+    class MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8,MS9,MS10,MS11 coreStyle
+    class EventBus,AuditLog,Observabilidad infraStyle
+    class DriveS3,WhatsAppEmail,N8N externosServStyle

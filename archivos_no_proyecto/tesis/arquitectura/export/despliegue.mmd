@@ -1,0 +1,70 @@
+flowchart TB
+    Users["Usuarios\n(Web + WhatsApp)"]
+    LB["Load Balancer"]
+    CDN["CDN (opcional)"]
+    APIGW["API Gateway/BFF"]
+    RateLimit["Rate Limiting"]
+    Auth["Authentication"]
+    K8s["Kubernetes Cluster"]
+
+    subgraph Pods["PODS (Microservicios)"]
+        MS1[Identity]
+        MS2[Master Data]
+        MS3[Quotation]
+        MS4[Proforma]
+        MS5[Billing & Tax]
+        MS6[AR]
+        MS7[Documents]
+        MS8[Notifications]
+        MS9[Analytics]
+        MS10[AI Assist]
+        MS11[Offline Sync]
+    end
+
+    EventBus["Event Bus"]
+    DBs["PostgreSQL por servicio"]
+    Redis["Redis"]
+    S3["Object Storage"]
+    Logs["Logs"]
+    Metrics["Metrics"]
+    Traces["Traces"]
+    WhatsApp["WhatsApp API"]
+    Email["Email Provider"]
+    N8N["n8n"]
+    BackupDB["DB Snapshots"]
+    BackupS3["S3 Versioning"]
+
+    Users --> CDN
+    CDN --> LB
+    LB --> APIGW
+    APIGW --> RateLimit
+    RateLimit --> Auth
+    Auth --> K8s
+
+    K8s --> Pods
+    Pods --> EventBus
+    Pods --> DBs
+    Pods --> Redis
+    Pods --> S3
+    Pods --> Logs
+    Pods --> Metrics
+    Pods --> Traces
+
+    MS8 --> WhatsApp
+    MS8 --> Email
+    MS8 --> N8N
+
+    DBs --> BackupDB
+    S3 --> BackupS3
+
+    classDef edgeStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
+    classDef computeStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef dataStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef obsStyle fill:#eceff1,stroke:#455a64,stroke-width:2px,color:#000
+    classDef extStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000
+
+    class CDN,LB,APIGW,RateLimit,Auth edgeStyle
+    class K8s,Pods,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8,MS9,MS10,MS11 computeStyle
+    class EventBus,DBs,Redis,S3 dataStyle
+    class Logs,Metrics,Traces obsStyle
+    class WhatsApp,Email,N8N,BackupDB,BackupS3 extStyle

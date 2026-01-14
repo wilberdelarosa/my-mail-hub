@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    participant App as App Cliente (Offline)
+    participant OS as Offline Sync Service
+    participant DB as DB OfflineSync
+    participant EB as Event Bus
+    participant Core as Servicios Core
+
+    App->>App: Generar UUID unico
+    App->>App: Guardar en cache local
+
+    App->>OS: SubmitBatch(transacciones[])
+
+    loop Para cada transaccion
+        OS->>DB: Verificar IdempotencyKey
+        alt UUID nuevo
+            DB-->>OS: UUID valido
+            OS->>DB: Guardar UUID + timestamp
+            OS->>EB: Publicar eventos
+            EB-->>Core: Procesar eventos
+            Core-->>OS: Procesado
+        else UUID duplicado
+            DB-->>OS: UUID duplicado
+            OS->>OS: Log conflicto
+            OS-->>App: ConflictDetected
+        end
+    end
+
+    OS-->>App: Resultado final: aplicadas vs conflictos
