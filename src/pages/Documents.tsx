@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { DashboardHome } from '@/components/dashboard/DashboardHome';
+import { DocumentsList } from '@/components/documents/DocumentsList';
 
-const Index = () => {
+export default function DocumentsPage() {
   const { isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -14,23 +14,11 @@ const Index = () => {
     }
   }, [isAuthenticated, loading, navigate]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (loading || !isAuthenticated) return null;
 
   return (
     <DashboardLayout>
-      <DashboardHome />
+      <DocumentsList />
     </DashboardLayout>
   );
-};
-
-export default Index;
+}
