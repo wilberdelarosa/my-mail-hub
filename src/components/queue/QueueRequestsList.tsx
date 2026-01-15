@@ -82,7 +82,7 @@ export function QueueRequestsList() {
         <Input
           placeholder="Buscar por ID, estado o contenido..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
           className="pl-10"
         />
       </div>
