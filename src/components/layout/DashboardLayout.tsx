@@ -9,6 +9,7 @@ import {
   FileText,
   Users,
   Package,
+  Inbox,
   Settings,
   LogOut,
   Menu,
@@ -26,6 +27,7 @@ const navItems = [
   { icon: FileText, label: 'Documentos', path: '/documentos' },
   { icon: Users, label: 'Clientes', path: '/clientes' },
   { icon: Package, label: 'Equipos', path: '/equipos' },
+  { icon: Inbox, label: 'Solicitudes por cola', path: '/solicitudes' },
   { icon: Sparkles, label: 'Asistente IA', path: '/asistente' },
   { icon: Settings, label: 'Configuración', path: '/configuracion' },
 ];

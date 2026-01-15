@@ -10,6 +10,7 @@ import ClientsPage from "./pages/Clients";
 import EquipmentPage from "./pages/Equipment";
 import AssistantPage from "./pages/Assistant";
 import SettingsPage from "./pages/Settings";
+import QueueRequestsPage from "./pages/QueueRequests";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/clientes" element={<ClientsPage />} />
           <Route path="/equipos" element={<EquipmentPage />} />
           <Route path="/asistente" element={<AssistantPage />} />
+          <Route path="/solicitudes" element={<QueueRequestsPage />} />
           <Route path="/configuracion" element={<SettingsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
+<<<<<<< Updated upstream
 import { componentTagger } from "lovable-tagger";
 import { fileURLToPath } from "url";
 
@@ -19,6 +20,30 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+=======
+
+export default defineConfig(async ({ mode }) => {
+  let tagger: any = null;
+
+  if (mode === 'development') {
+    const { componentTagger } = await import("lovable-tagger");
+    tagger = componentTagger();
+  }
+
+  return {
+    server: {
+      host: "::",
+      port: 8080,
+>>>>>>> Stashed changes
     },
-  },
-}));
+    plugins: [
+      react(),
+      tagger,
+    ].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
+  };
+});
