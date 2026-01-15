@@ -1,3 +1,9 @@
+export enum PaymentStatus {
+    DRAFT = 'DRAFT',
+    POSTED = 'POSTED',
+    CANCELLED = 'CANCELLED'
+}
+
 export enum PaymentMethod {
     CASH = 'CASH',
     CREDIT_CARD = 'CREDIT_CARD',
@@ -15,7 +21,7 @@ export class Payment {
         public method: PaymentMethod,
         public reference: string, // Nro Cheque / Transferencia
         public date: Date,
-        public status: 'DRAFT' | 'POSTED' | 'CANCELLED'
+        public status: PaymentStatus
     ) { }
 
     /**

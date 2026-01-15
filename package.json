@@ -1,0 +1,18 @@
+{
+    "name": "tesis-facturacion-root",
+    "version": "1.0.0",
+    "description": "Orquestador principal para Alito Group Facturación",
+    "scripts": {
+        "install:all": "powershell -ExecutionPolicy Bypass -File ./install-dependencies.ps1",
+        "dev:frontend": "cd sistema_facturacion/web-app && npm run dev",
+        "dev:identity": "cd sistema_facturacion/services/identity-service && npm run start:dev",
+        "dev:master": "cd sistema_facturacion/services/master-data-service && npm run start:dev",
+        "dev:billing": "cd sistema_facturacion/services/billing-service && npm run start:dev",
+        "dev:quotation": "cd sistema_facturacion/services/quotation-service && npm run start:dev",
+        "dev:ar": "cd sistema_facturacion/services/ar-service && npm run start:dev",
+        "start:all": "powershell -ExecutionPolicy Bypass -File ./start-backend.ps1",
+        "supabase:start": "supabase start",
+        "supabase:stop": "supabase stop",
+        "supabase:reset": "supabase db reset"
+    }
+}

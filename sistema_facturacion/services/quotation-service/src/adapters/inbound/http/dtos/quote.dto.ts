@@ -9,11 +9,19 @@ class QuoteItemDto {
     description: string;
 
     @IsNumber()
-    @Min(1)
+    @Min(0.01)
     quantity: number;
 
     @IsNumber()
+    @Min(0)
     unitPrice: number;
+
+    @IsNumber()
+    @Min(0)
+    taxRate: number;
+
+    @IsString()
+    unit?: string;
 }
 
 export class CreateQuoteDto {

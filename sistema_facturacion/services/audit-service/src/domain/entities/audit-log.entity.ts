@@ -3,11 +3,11 @@ export class AuditLog {
         public readonly id: string,
         public readonly service: string,
         public readonly entity: string,
-        public readonly action: string, // CREATE, UPDATE, DELETE, LOGIN
+        public readonly action: string,
         public readonly entityId: string,
-        public readonly userId: string,
+        public readonly userId: string | null,
         public readonly ipAddress: string,
-        public readonly payload: any, // JSON con datos cambiados
+        public readonly payload: any,
         public readonly timestamp: Date
     ) { }
 }

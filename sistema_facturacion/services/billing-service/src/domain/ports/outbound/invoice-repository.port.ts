@@ -6,3 +6,5 @@ export interface InvoiceRepositoryPort {
     findById(id: string): Promise<Invoice | null>;
     getNextNCF(type: string): Promise<string>; // E3100000001
 }
+
+export const InvoiceRepositoryPort = Symbol('InvoiceRepositoryPort');

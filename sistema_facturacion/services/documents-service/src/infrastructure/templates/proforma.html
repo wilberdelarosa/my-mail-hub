@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Helvetica', 'Arial', sans-serif; color: #1e293b; margin: 0; padding: 30px; line-height: 1.4; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #0f172a; padding-bottom: 15px; margin-bottom: 25px; }
+        .logo-section h1 { margin: 0; color: #0f172a; font-size: 24px; font-weight: 800; }
+        .logo-section p { margin: 1px 0; font-size: 11px; color: #475569; }
+        .doc-title { text-align: right; }
+        .doc-title h2 { margin: 0; color: #0f172a; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
+        .doc-number { font-size: 18px; font-weight: bold; color: #1e293b; margin-top: 5px; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px; }
+        .info-box { border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; }
+        .info-box h3 { font-size: 9px; text-transform: uppercase; color: #64748b; margin: 0 0 8px 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px; }
+        .info-box p { margin: 3px 0; font-size: 12px; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; text-align: left; padding: 10px; font-size: 10px; text-transform: uppercase; color: #475569; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px; font-size: 12px; border-bottom: 1px solid #f1f5f9; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        .delivery-info { background-color: #f1f5f9; padding: 10px; border-radius: 4px; margin-bottom: 25px; font-size: 11px; display: flex; justify-content: space-between; }
+        
+        .footer { margin-top: 50px; font-size: 10px; color: #64748b; }
+        .sign-area { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 60px; }
+        .sign-box { border-top: 1px solid #1e293b; text-align: center; padding-top: 5px; }
+        
+        .barcode { text-align: center; margin-top: 20px; font-family: 'Libre Barcode 39', cursive; font-size: 40px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <h1>ALITO GROUP</h1>
+            <p>Servicios Industriales y Mantenimiento</p>
+            <p>RNC: 131-XXXXX-X</p>
+            <p>Tel: 809-XXX-XXXX</p>
+        </div>
+        <div class="doc-title">
+            <h2>Conduce / Proforma</h2>
+            <p class="doc-number">{{proformaNumber}}</p>
+            <p style="font-size: 11px; color: #64748b;">Fecha: {{date}}</p>
+            <p style="font-size: 11px; color: #64748b;">Ref. Cotización: {{quoteNumber}}</p>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <h3>Entregar a</h3>
+            <p><strong>{{customerName}}</strong></p>
+            <p>RNC/Cédula: {{customerRnc}}</p>
+            <p>Dirección: {{customerAddress}}</p>
+            <p>Contacto: {{customerContact}}</p>
+        </div>
+        <div class="info-box">
+            <h3>Detalles de Entrega</h3>
+            <p>Vendedor: {{salesPerson}}</p>
+            <p>Almacén: {{warehouse}}</p>
+            <p>Transporte: {{carrier}}</p>
+            <p>Nro. Orden: {{poNumber}}</p>
+        </div>
+    </div>
+
+    <div class="delivery-info">
+        <span><strong>FECHA DE EJECUCIÓN:</strong> {{executionDate}}</span>
+        <span><strong>NRO. CONTROL:</strong> {{controlNumber}}</span>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="10%" class="text-center">Cant.</th>
+                <th width="15%" class="text-center">Código</th>
+                <th width="60%">Descripción del Servicio / Equipo</th>
+                <th width="15%" class="text-center">Ubicación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td class="text-center"><strong>{{quantity}}</strong></td>
+                <td class="text-center">{{code}}</td>
+                <td>{{description}}</td>
+                <td class="text-center">{{location}}</td>
+            </tr>
+            {{/each}}
+            <!-- Filler rows -->
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </tbody>
+    </table>
+
+    <div style="font-size: 11px; margin-top: 10px;">
+        <strong>Observaciones:</strong><br>
+        {{notes}}
+    </div>
+
+    <div class="sign-area">
+        <div class="sign-box">
+            <strong>ENTREGADO POR (ALITO GROUP)</strong><br>
+            <span style="font-size: 9px; color: #64748b;">Nombre, Firma y Sello</span>
+        </div>
+        <div class="sign-box">
+            <strong>RECIBIDO CONFORME (CLIENTE)</strong><br>
+            <span style="font-size: 9px; color: #64748b;">Nombre, Cédula y Firma</span>
+        </div>
+    </div>
+
+    <div class="footer text-center">
+        PROHIBIDO LA REPRODUCCIÓN TOTAL O PARCIAL DE ESTE DOCUMENTO SIN AUTORIZACIÓN.<br>
+        CONTROL INTERNO: {{proformaId}}
+    </div>
+</body>
+</html>

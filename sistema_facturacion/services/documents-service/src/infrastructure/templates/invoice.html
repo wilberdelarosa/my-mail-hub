@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Courier New', monospace; color: #000; margin: 0; padding: 20px; font-size: 12px; }
+        .border-box { border: 1px solid #000; padding: 15px; margin-bottom: 20px; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
+        .logo-area { font-weight: bold; font-size: 20px; }
+        .ncf-area { text-align: right; }
+        .ncf-box { background: #000; color: #fff; padding: 5px 10px; font-weight: bold; margin-bottom: 5px; display: inline-block; }
+        
+        .fiscal-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .info-label { font-weight: bold; text-decoration: underline; display: block; margin-bottom: 5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { border: 1px solid #000; padding: 8px; background: #eee; text-align: left; }
+        td { border-left: 1px solid #000; border-right: 1px solid #000; padding: 8px; }
+        .row-total { border-top: 1px solid #000; border-bottom: 1px solid #000; font-weight: bold; }
+        
+        .bottom-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; }
+        .totals-area { text-align: right; }
+        .totals-table { width: 100%; }
+        .totals-table td { border: none; padding: 4px; }
+        .final-total { border-top: 2px solid #000 !important; font-size: 16px; font-weight: bold; }
+        
+        .signatures { margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center; }
+        .sig-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; font-size: 10px; }
+        
+        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 80px; color: rgba(0,0,0,0.05); pointer-events: none; z-index: -1; }
+    </style>
+</head>
+<body>
+    <div class="watermark">FACTURA FISCAL</div>
+
+    <div class="header">
+        <div class="logo-area">
+            ALITO GROUP SRL<br>
+            <span style="font-size: 10px; font-weight: normal;">
+                Servicios Industriales y de Mantenimiento<br>
+                RNC: 131-76635-4<br>
+                C/ San Antón #12, Herrera, SDO.<br>
+                Tel: 809-XXX-XXXX
+            </span>
+        </div>
+        <div class="ncf-area">
+            <div class="ncf-box">FACTURA DE CRÉDITO FISCAL</div><br>
+            <strong>NCF: {{ncf}}</strong><br>
+            Vence: {{ncfExpiry}}<br>
+            Factura No: {{invoiceNumber}}<br>
+            Fecha: {{date}}
+        </div>
+    </div>
+
+    <div class="fiscal-info">
+        <div class="border-box">
+            <span class="info-label">DATOS DEL CLIENTE</span>
+            <strong>RAZÓN SOCIAL:</strong> {{customerName}}<br>
+            <strong>RNC/CÉDULA:</strong> {{customerRnc}}<br>
+            <strong>TIPO FISCAL:</strong> {{fiscalType}}
+        </div>
+        <div class="border-box">
+            <span class="info-label">DATOS DE VENTA</span>
+            <strong>CONDICIÓN:</strong> {{paymentCondition}}<br>
+            <strong>VENCIMIENTO:</strong> {{dueDate}}<br>
+            <strong>ORDEN COMPRA:</strong> {{poNumber}}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="10%">CANT.</th>
+                <th width="60%">DESCRIPCIÓN / SERVICIO</th>
+                <th width="15%">PRECIO</th>
+                <th width="15%">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td>{{quantity}}</td>
+                <td>{{description}}</td>
+                <td style="text-align: right;">{{unitPrice}}</td>
+                <td style="text-align: right;">{{total}}</td>
+            </tr>
+            {{/each}}
+            <!-- Filler rows to maintain height -->
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </tbody>
+        <tfoot>
+            <tr class="row-total">
+                <td colspan="3" style="text-align: right;">MONTO GRAVADO (18%)</td>
+                <td style="text-align: right;">{{subtotal}}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="bottom-grid">
+        <div style="font-size: 10px;">
+            <strong>VALOR EN LETRAS:</strong> {{totalInWords}}<br><br>
+            <strong>NOTAS:</strong><br>
+            {{notes}}
+        </div>
+        <div class="totals-area">
+            <table class="totals-table">
+                <tr>
+                    <td>SUBTOTAL</td>
+                    <td>${{subtotal}}</td>
+                </tr>
+                <tr>
+                    <td>ITBIS 18%</td>
+                    <td>${{taxAmount}}</td>
+                </tr>
+                <tr>
+                    <td>DESC.</td>
+                    <td>$0.00</td>
+                </tr>
+                <tr class="final-total">
+                    <td>TOTAL DOP</td>
+                    <td>${{grandTotal}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="signatures">
+        <div>
+            <div class="sig-line">ENTREGADO POR / SELLO</div>
+        </div>
+        <div>
+            <div class="sig-line">RECIBIDO CONFORME</div>
+        </div>
+        <div>
+            <div class="sig-line">AUTORIZADO</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; text-align: center; font-size: 9px; border-top: 1px dashed #ccc; padding-top: 10px;">
+        ORIGINAL: CLIENTE | COPIA: VENDEDOR | COPIA: CONTABILIDAD<br>
+        <strong>¡GRACIAS POR SU COMPRA!</strong>
+    </div>
+</body>
+</html>

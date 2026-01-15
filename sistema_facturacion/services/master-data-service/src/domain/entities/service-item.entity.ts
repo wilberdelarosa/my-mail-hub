@@ -13,7 +13,13 @@ export class ServiceItem {
         public taxRate: number, // ITBIS 18% = 0.18
         public readonly category: string,
         public isActive: boolean,
-        public readonly createdAt: Date
+        public readonly createdAt: Date,
+        public unit: string = 'UD',
+        public itemType: ServiceItemType = 'SERVICE',
+        public currency: string = 'DOP',
+        public cost: number = 0,
+        public isTaxable: boolean = true,
+        public attributes: Record<string, unknown> = {}
     ) { }
 
     /**
@@ -37,3 +43,5 @@ export class ServiceItem {
         return this.isActive && this.unitPrice > 0;
     }
 }
+
+export type ServiceItemType = 'PRODUCT' | 'SERVICE' | 'EQUIPMENT' | 'MATERIAL';

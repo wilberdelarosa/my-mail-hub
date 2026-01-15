@@ -4,6 +4,7 @@ export enum QuoteStatus {
     DRAFT = 'DRAFT',
     SENT = 'SENT',
     APPROVED = 'APPROVED',
+    COMPLETED = 'COMPLETED', // Proforma completada waiting for Invoice
     REJECTED = 'REJECTED',
     EXPIRED = 'EXPIRED',
     INVOICED = 'INVOICED'
@@ -21,6 +22,8 @@ export class Quote {
         public subtotal: number,
         public taxAmount: number,
         public total: number,
+        public totalExempt: number = 0,
+        public totalTaxable: number = 0,
         public notes?: string
     ) { }
 
@@ -39,7 +42,15 @@ export class Quote {
      * Calcular totales
      */
     calculateTotals(): void {
-        this.subtotal = this.items.reduce((sum, item) => sum + item.total, 0);
+        this.totalExempt = this.items
+            .filter(item => item.taxRate === 0)
+            .reduce((sum, item) => sum + item.subtotal, 0);
+
+        this.totalTaxable = this.items
+            .filter(item => item.taxRate > 0)
+            .reduce((sum, item) => sum + item.subtotal, 0);
+
+        this.subtotal = this.totalExempt + this.totalTaxable;
         this.taxAmount = this.items.reduce((sum, item) => sum + item.taxAmount, 0);
         this.total = this.subtotal + this.taxAmount;
     }

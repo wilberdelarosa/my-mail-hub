@@ -1,30 +1,31 @@
-import { Controller, Post, Body, Param, Get, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Get, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreatePaymentDto, ApplyPaymentDto } from './dtos/payment.dto';
+import { RegisterPaymentUseCase } from '../../../application/use-cases/register-payment.usecase';
 import { SupabasePaymentRepository } from '../../outbound/persistence/supabase-payment.repository';
-// import { RegisterPaymentUseCase } from '../../../application/use-cases/register-payment.usecase';
-
-// Placeholder UseCase
-class RegisterPaymentUseCase {
-    execute(dto: any) { return { id: 'pay-123', status: 'POSTED', ...dto }; }
-}
 
 @Controller('payments')
 export class ArController {
-    private registerPaymentUseCase = new RegisterPaymentUseCase();
-
     constructor(
-        private paymentRepo: SupabasePaymentRepository // Inject real repo for future use
+        private readonly registerPaymentUseCase: RegisterPaymentUseCase,
+        private readonly paymentRepo: SupabasePaymentRepository
     ) { }
 
     @Post()
-    @UsePipes(new ValidationPipe())
+    @UsePipes(new ValidationPipe({ transform: true }))
     async create(@Body() dto: CreatePaymentDto) {
         return this.registerPaymentUseCase.execute(dto);
     }
 
     @Post('apply')
+    @UsePipes(new ValidationPipe({ transform: true }))
     async apply(@Body() dto: ApplyPaymentDto) {
         await this.paymentRepo.applyToInvoice(dto.paymentId, dto.invoiceId, dto.amount);
-        return { success: true, message: 'Payment applied successfully' };
+        return { success: true, message: 'Pago aplicado exitosamente' };
+    }
+
+    @Get()
+    async findAll() {
+        // Podríamos implementar un GetPaymentsUseCase, pero por ahora directo al repo o mock
+        return [];
     }
 }

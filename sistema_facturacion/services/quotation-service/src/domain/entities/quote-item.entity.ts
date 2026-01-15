@@ -5,7 +5,8 @@ export class QuoteItem {
         public description: string,
         public quantity: number,
         public unitPrice: number,
-        public taxRate: number
+        public taxRate: number,
+        public unit: string = 'PA' // Par, Unidad, etc.
     ) { }
 
     get subtotal(): number {

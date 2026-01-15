@@ -1,5 +1,12 @@
 import { IsEmail, IsNotEmpty, IsString, Length, IsEnum, IsNumber, Min } from 'class-validator';
-import { FiscalType } from '../../../domain/entities/customer.entity';
+// import { FiscalType } from '../../../domain/entities/customer.entity';
+
+export enum FiscalType {
+    CREDITO_FISCAL = 'CREDITO_FISCAL',
+    CONSUMIDOR = 'CONSUMIDOR',
+    GUBERNAMENTAL = 'GUBERNAMENTAL',
+    ESPECIAL = 'ESPECIAL'
+}
 
 export class CreateCustomerDto {
     @IsString()

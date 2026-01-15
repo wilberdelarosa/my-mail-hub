@@ -9,10 +9,14 @@ export class SupabasePaymentRepository implements PaymentRepositoryPort {
     private supabase: SupabaseClient;
 
     constructor(private configService: ConfigService) {
-        this.supabase = createClient(
-            this.configService.get<string>('SUPABASE_URL'),
-            this.configService.get<string>('SUPABASE_SERVICE_KEY'),
-        );
+        const url = this.configService.get<string>('SUPABASE_URL');
+        const key = this.configService.get<string>('SUPABASE_SERVICE_KEY');
+
+        if (!url || !key) {
+            throw new Error('Supabase URL or Key not found in environment');
+        }
+
+        this.supabase = createClient(url, key);
     }
 
     async save(payment: Payment): Promise<void> {

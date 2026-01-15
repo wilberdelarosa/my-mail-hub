@@ -3,8 +3,20 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.enableCors();
-    await app.listen(3002); // Puerto diferenciado (Identity=3001)
-    console.log('Master Data Service running on port 3002');
+
+    const corsOrigin = process.env.CORS_ORIGIN
+        ? process.env.CORS_ORIGIN.split(',')
+        : 'http://localhost:3000';
+
+    app.enableCors({
+        origin: corsOrigin,
+        credentials: true,
+    });
+
+    app.setGlobalPrefix('api/master-data/v1');
+
+    const port = process.env.PORT || 3002;
+    await app.listen(port);
+    console.log(`Master Data Service running on port ${port}`);
 }
 bootstrap();

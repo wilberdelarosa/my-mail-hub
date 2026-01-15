@@ -3,8 +3,20 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.enableCors();
-    await app.listen(3005); // Port 3005
-    console.log('AR Service running on port 3005');
+
+    const corsOrigin = process.env.CORS_ORIGIN
+        ? process.env.CORS_ORIGIN.split(',')
+        : 'http://localhost:3000';
+
+    app.enableCors({
+        origin: corsOrigin,
+        credentials: true,
+    });
+
+    app.setGlobalPrefix('api/ar/v1');
+
+    const port = process.env.PORT || 3005;
+    await app.listen(port);
+    console.log(`AR Service running on port ${port}`);
 }
 bootstrap();
