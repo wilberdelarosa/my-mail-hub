@@ -133,18 +133,18 @@ async function detectDuplicateCustomers(): Promise<DuplicateMatch[]> {
       const normalizeRnc = (r: string) => (r || "").replace(/\D/g, "");
       const rnc1 = normalizeRnc(c1.rnc);
       const rnc2 = normalizeRnc(c2.rnc);
-      const rncMatch = rnc1 && rnc2 && rnc1 === rnc2;
+      const rncMatch: boolean = Boolean(rnc1 && rnc2 && rnc1 === rnc2);
       
       // Check email match
       const email1 = (c1.contact_email || "").toLowerCase().trim();
       const email2 = (c2.contact_email || "").toLowerCase().trim();
-      const emailMatch = email1 && email2 && email1 === email2;
+      const emailMatch: boolean = Boolean(email1 && email2 && email1 === email2);
       
       // Check phone match (normalize to digits only)
       const normalizePhone = (p: string) => (p || "").replace(/\D/g, "").slice(-10);
       const phone1 = normalizePhone(c1.contact_phone);
       const phone2 = normalizePhone(c2.contact_phone);
-      const phoneMatch = phone1 && phone2 && phone1 === phone2;
+      const phoneMatch: boolean = Boolean(phone1 && phone2 && phone1 === phone2);
 
       // Calculate confidence and determine if duplicate
       let confidence = 0;
