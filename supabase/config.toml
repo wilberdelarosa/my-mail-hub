@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.notifications]
 verify_jwt = false
+
+[functions.ocr-service]
+verify_jwt = false
+
+[functions.integration-tests]
+verify_jwt = false
