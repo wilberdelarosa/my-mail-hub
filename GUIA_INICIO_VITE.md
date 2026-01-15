@@ -30,6 +30,29 @@ Servicios:      ⏸️  Esperando base de datos
 
 ## 🚀 CÓMO INICIAR TODO (Cuando Docker funcione)
 
+### ✅ Inicialización rápida (recomendada)
+```powershell
+# Desde la raíz del proyecto
+cd c:\Users\wilbe\Downloads\TESISFACTURACION
+
+# 1) Infraestructura base (Kong, RabbitMQ, Redis, observabilidad)
+\.\scripts\INICIAR_TODO.ps1
+
+# 2) Base de datos local (Supabase)
+\.\scripts\init_supabase.ps1
+```
+
+Si aparece este error al iniciar la base de datos:
+```
+Bind for 0.0.0.0:54322 failed: port is already allocated
+```
+Ejecuta:
+```powershell
+cd c:\Users\wilbe\Downloads\TESISFACTURACION\sistema_facturacion\supabase
+supabase stop --project-id TESISFACTURACION
+supabase start
+```
+
 ### **Paso 1: Reiniciar Docker Desktop**
 ```powershell
 # Cierra Docker Desktop y vuelve a abrirlo
