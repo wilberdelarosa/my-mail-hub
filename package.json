@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Orquestador principal para Alito Group Facturación",
     "scripts": {
+        "build:dev": "vite build --mode development",
         "postinstall": "npm --prefix sistema_facturacion/web-app install",
         "dev": "npm --prefix sistema_facturacion/web-app run dev",
         "build": "npm --prefix sistema_facturacion/web-app run build",
