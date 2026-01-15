@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "Orquestador principal para Alito Group Facturación",
     "scripts": {
-          "postinstall": "npm --prefix sistema_facturacion/web-app install",
-          "dev": "npm --prefix sistema_facturacion/web-app run dev",
-          "build": "npm --prefix sistema_facturacion/web-app run build",
-          "start": "npm --prefix sistema_facturacion/web-app run start",
+        "postinstall": "npm --prefix sistema_facturacion/web-app install",
+        "dev": "npm --prefix sistema_facturacion/web-app run dev",
+        "build": "npm --prefix sistema_facturacion/web-app run build",
+        "start": "npm --prefix sistema_facturacion/web-app run start",
         "install:all": "powershell -ExecutionPolicy Bypass -File ./install-dependencies.ps1",
         "dev:frontend": "cd sistema_facturacion/web-app && npm run dev",
         "dev:identity": "cd sistema_facturacion/services/identity-service && npm run start:dev",
@@ -18,5 +18,8 @@
         "supabase:start": "supabase start",
         "supabase:stop": "supabase stop",
         "supabase:reset": "supabase db reset"
+    },
+    "dependencies": {
+        "lovable-tagger": "^1.1.13"
     }
 }
