@@ -1,7 +1,4 @@
-'use client';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
     LayoutDashboard,
@@ -9,7 +6,6 @@ import {
     FileText,
     Receipt,
     Banknote,
-    BarChart3,
     Settings,
     LogOut
 } from 'lucide-react';
@@ -24,7 +20,7 @@ const MENU_ITEMS = [
 ];
 
 export function Sidebar() {
-    const pathname = usePathname();
+    const { pathname } = useLocation();
 
     return (
         <div className="flex h-full w-64 flex-col border-r border-slate-200 bg-slate-900 text-white">
@@ -39,7 +35,7 @@ export function Sidebar() {
                         return (
                             <Link
                                 key={item.href}
-                                href={item.href}
+                                to={item.href}
                                 className={cn(
                                     "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-800",
                                     isActive ? "bg-slate-800 text-white" : "text-slate-400"
@@ -54,7 +50,7 @@ export function Sidebar() {
 
                 <div className="space-y-1 border-t border-slate-800 pt-3">
                     <Link
-                        href="/settings"
+                        to="/settings"
                         className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-400 hover:bg-slate-800"
                     >
                         <Settings className="h-5 w-5" />
