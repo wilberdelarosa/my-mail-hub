@@ -3,9 +3,14 @@
 -- Date: 2026-01-14
 
 -- ============================================
+-- CREATE ANALYTICS SCHEMA
+-- ============================================
+CREATE SCHEMA IF NOT EXISTS analytics;
+
+-- ============================================
 -- KPI_DAILY_SNAPSHOTS Table
 -- ============================================
-CREATE TABLE IF NOT EXISTS kpi_daily_snapshots (
+CREATE TABLE IF NOT EXISTS analytics.kpi_daily_snapshots (
     date DATE PRIMARY KEY DEFAULT CURRENT_DATE,
     total_sales DECIMAL(15,2) DEFAULT 0,
     total_collected DECIMAL(15,2) DEFAULT 0,
@@ -17,7 +22,7 @@ CREATE TABLE IF NOT EXISTS kpi_daily_snapshots (
 -- ============================================
 -- SALES_BY_CATEGORY Table
 -- ============================================
-CREATE TABLE IF NOT EXISTS sales_by_category (
+CREATE TABLE IF NOT EXISTS analytics.sales_by_category (
     category VARCHAR(100),
     month DATE, -- Primer día del mes
     total_amount DECIMAL(15,2),
@@ -28,4 +33,6 @@ CREATE TABLE IF NOT EXISTS sales_by_category (
 -- ============================================
 -- COMMENTS
 -- ============================================
-COMMENT ON TABLE kpi_daily_snapshots IS 'Tabla desnormalizada para dashboard rápido';
+COMMENT ON SCHEMA analytics IS 'Data Mart para Business Intelligence y Analytics';
+COMMENT ON TABLE analytics.kpi_daily_snapshots IS 'Tabla desnormalizada para dashboard rápido';
+COMMENT ON TABLE analytics.sales_by_category IS 'Ventas agregadas por categoría y mes';

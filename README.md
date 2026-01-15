@@ -8,19 +8,26 @@ Este documento es tu punto de entrada a toda la documentación del sistema.
 
 ## 🎯 INICIO RÁPIDO
 
+### UI (web-app) + microservicios
+
+- UI principal: `npm run dev` (arranca `sistema_facturacion/web-app` en `http://localhost:3000`).
+- Backend: `npm run start:all` (arranca microservicios).
+
+Si por alguna razón necesitas la UI Vite de la raíz: `npm run dev:root`.
+
 **¿Primera vez?** Lee estos documentos en orden:
 
-1. **[RESUMEN_EJECUTIVO_FINAL.md](./RESUMEN_EJECUTIVO_FINAL.md)** ⭐
+1. **[RESUMEN_EJECUTIVO_FINAL.md](./docs/00_overview/RESUMEN_EJECUTIVO_FINAL.md)** ⭐
    - Visión general del proyecto
    - Estado actual y progreso
    - Componentes implementados
    
-2. **[ESTADO_FINAL_FASE1.md](./ESTADO_FINAL_FASE1.md)**
+2. **[ESTADO_FINAL_FASE1.md](./docs/05_progress/ESTADO_FINAL_FASE1.md)**
    - Estado de infraestructura
    - Servicios corriendo
    - Credenciales de acceso
 
-3. **[ENLACES_ACCESO.md](./ENLACES_ACCESO.md)** (si existe)
+3. **[ENLACES_ACCESO.md](./docs/01_guides/ENLACES_ACCESO.md)**
    - URLs de todos los servicios
    - Acceso rápido a interfaces
 
@@ -44,10 +51,10 @@ Este documento es tu punto de entrada a toda la documentación del sistema.
 | Documento | Descripción |
 |-----------|-------------|
 | [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | **Guía completa de deployment** ⭐ |
-| [deploy.ps1](./deploy.ps1) | Script automatizado de deployment |
-| [start-all-services.ps1](./start-all-services.ps1) | Iniciar todos los servicios localmente |
-| [build-all-services.ps1](./build-all-services.ps1) | Compilar todos los microservicios |
-| [run-all-tests.ps1](./run-all-tests.ps1) | Ejecutar todos los tests |
+| [scripts/06_deploy/deploy.ps1](./scripts/06_deploy/deploy.ps1) | Script automatizado de deployment |
+| [scripts/03_dev/start-all-services.ps1](./scripts/03_dev/start-all-services.ps1) | Iniciar todos los servicios localmente |
+| [scripts/04_build/build-all-services.ps1](./scripts/04_build/build-all-services.ps1) | Compilar todos los microservicios |
+| [scripts/05_test/run-all-tests.ps1](./scripts/05_test/run-all-tests.ps1) | Ejecutar todos los tests |
 
 ---
 
@@ -64,9 +71,9 @@ Este documento es tu punto de entrada a toda la documentación del sistema.
 
 | Documento | Descripción |
 |-----------|-------------|
-| [RESUMEN_EJECUTIVO_FINAL.md](./RESUMEN_EJECUTIVO_FINAL.md) | **Resumen ejecutivo completo** ⭐ |
-| [PROGRESO_14_ENERO_2026.md](./PROGRESO_14_ENERO_2026.md) | Progreso del 14 de enero |
-| [ESTADO_FINAL_FASE1.md](./ESTADO_FINAL_FASE1.md) | Estado infraestructura base |
+| [docs/00_overview/RESUMEN_EJECUTIVO_FINAL.md](./docs/00_overview/RESUMEN_EJECUTIVO_FINAL.md) | **Resumen ejecutivo completo** ⭐ |
+| [docs/05_progress/PROGRESO_14_ENERO_2026.md](./docs/05_progress/PROGRESO_14_ENERO_2026.md) | Progreso del 14 de enero |
+| [docs/05_progress/ESTADO_FINAL_FASE1.md](./docs/05_progress/ESTADO_FINAL_FASE1.md) | Estado infraestructura base |
 
 ---
 
@@ -120,7 +127,7 @@ supabase/migrations/
 ### Scripts de Test
 ```bash
 # Correr todos los tests
-.\run-all-tests.ps1
+.\scripts\05_test\run-all-tests.ps1
 
 # Test unitarios individuales
 cd sistema_facturacion/services/quotation-service

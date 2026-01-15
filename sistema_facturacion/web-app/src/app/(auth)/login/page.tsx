@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { supabase } from '../../../lib/supabase/client';
+import { Button } from '../../../components/ui/button';
+import { Input } from '../../../components/ui/input';
+import { Label } from '../../../components/ui/label';
 import { AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
         setLoading(true);
@@ -65,7 +65,7 @@ export default function LoginPage() {
                                 autoComplete="email"
                                 required
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                                 placeholder="admin@alitogroup.com"
                             />
                         </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
                                 autoComplete="current-password"
                                 required
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                                 placeholder="********"
                             />
                         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,7 +9,6 @@ import {
     Search,
     Receipt,
     Calendar,
-    CreditCard,
     ExternalLink,
     CheckCircle2,
     Clock,
@@ -81,7 +80,7 @@ export default function InvoicesPage() {
 
     const handleDownloadPdf = async (id: string) => {
         try {
-            alert('PDF de factura en desarrollo.');
+            alert(`PDF de factura (${id}) en desarrollo.`);
         } catch (error) {
             console.error('Error downloading PDF:', error);
             // Fallback provisional para demo
@@ -107,7 +106,7 @@ export default function InvoicesPage() {
                         Historial de comprobantes fiscales emitidos.
                     </p>
                 </div>
-                <Link href="/invoices/new">
+                <Link to="/invoices/new">
                     <Button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100">
                         <Plus className="h-4 w-4" /> Emitir Factura
                     </Button>
@@ -210,7 +209,7 @@ export default function InvoicesPage() {
                                             <Receipt className="h-6 w-6 text-slate-300" />
                                         </div>
                                         <p className="text-slate-500 text-sm">No hay facturas emitidas recientemente.</p>
-                                        <Link href="/invoices/new">
+                                        <Link to="/invoices/new">
                                             <Button variant="outline" size="sm">Comenzar ahora</Button>
                                         </Link>
                                     </div>

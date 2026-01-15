@@ -62,7 +62,7 @@
 **Archivos creados:**
 - `docs/DEPLOYMENT_GUIDE.md`
 - `docs/PRODUCTION_ARCHITECTURE.md`
-- `deploy.ps1`
+- `scripts/06_deploy/deploy.ps1`
 
 ---
 
@@ -198,7 +198,7 @@
 ### Opción 1: Deploy a Producción
 ```bash
 # 1. Ejecutar script de deploy
-.\deploy.ps1
+.\scripts\06_deploy\deploy.ps1
 
 # 2.Seguir DEPLOYMENT_GUIDE.md
 # 3. Crear cuentas en:
@@ -216,7 +216,7 @@
 supabase status
 
 # 2. Iniciar servicios backend
-.\start-all-services.ps1
+.\scripts\03_dev\start-all-services.ps1
 
 # 3. Iniciar frontend
 cd web-app

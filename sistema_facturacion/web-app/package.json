@@ -9,25 +9,26 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.19",
+    "axios": "^1.6.5",
+    "clsx": "^2.1.0",
+    "date-fns": "^3.1.0",
+    "lucide-react": "^0.316.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3",
-    "@tanstack/react-query": "^5.17.19",
-    "axios": "^1.6.5",
-    "date-fns": "^3.1.0",
-    "lucide-react": "^0.316.0",
     "sonner": "^1.3.1",
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "tesis-facturacion-root": "file:../.."
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "vite": "^5.0.11",
-    "typescript": "^5.3.3",
-    "tailwindcss": "^3.4.1",
     "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.33"
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11"
   }
 }

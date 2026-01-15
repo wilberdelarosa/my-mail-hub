@@ -1,5 +1,5 @@
 # Script de Deployment Automatizado - ALITO GROUP
-# Ejecutar: .\deploy.ps1
+# Ejecutar desde repo raíz: .\scripts\06_deploy\deploy.ps1
 
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  DEPLOYMENT - Sistema Facturación" -ForegroundColor Cyan

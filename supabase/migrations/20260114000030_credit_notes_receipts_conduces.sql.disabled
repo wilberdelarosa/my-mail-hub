@@ -237,7 +237,7 @@ SELECT
     c.id as customer_id,
     c.name as customer_name,
     'INVOICE' as transaction_type,
-    i.invoice_number as document_number,
+    i.ncf_sequence as document_number,
     i.issue_date as transaction_date,
     i.due_date,
     i.total as debit,

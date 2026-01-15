@@ -61,7 +61,7 @@ PORT=300X
 
 **Opción A - Todos a la vez:**
 ```powershell
-.\start-all-services.ps1
+.\scripts\03_dev\start-all-services.ps1
 ```
 
 **Opción B - Manualmente (cada uno en una terminal):**
@@ -180,10 +180,10 @@ npm run dev
 ## 📦 ARCHIVOS ENTREGABLES
 
 ### Scripts de Utilidad
-- `fix-node-path.ps1` - Corrige PATH temporalmente
-- `fix-node-path-permanent.ps1` - Corrige PATH permanentemente
-- `build-all.ps1` - Compila todos los servicios
-- `start-all-services.ps1` - Inicia todos los servicios
+- `scripts/01_fix/fix-node-path.ps1` - Corrige PATH temporalmente
+- `scripts/01_fix/fix-node-path-permanent.ps1` - Corrige PATH permanentemente
+- `scripts/04_build/build-all.ps1` - Compila todos los servicios
+- `scripts/03_dev/start-all-services.ps1` - Inicia todos los servicios
 
 ### Documentación
 - `ESTADO_FINAL_FASE1.md` - Documento completo de estado

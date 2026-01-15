@@ -182,7 +182,7 @@ Si algo no funciona:
 
 2. **Servicios backend no responden:**
    ```powershell
-   .\start-all-services.ps1
+  .\scripts\03_dev\start-all-services.ps1
    ```
    O iniciar cada uno manualmente:
    ```powershell

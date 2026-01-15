@@ -92,8 +92,8 @@ SELECT
   'COT-2026-' || lpad(gs::text, 5, '0') AS number,
   (SELECT id FROM customers ORDER BY random() LIMIT 1) AS customer_id,
   (ARRAY['DRAFT', 'SENT', 'APPROVED', 'REJECTED', 'EXPIRED', 'INVOICED'])[1 + floor(random() * 6)] AS status,
-  NOW() - (random() * 45 || ' days')::interval AS created_at,
-  NOW() + (random() * 30 || ' days')::interval AS expiration_date,
+  NOW() - (random() * 45) * interval '1 day' AS created_at,
+  NOW() + (random() * 30) * interval '1 day' AS expiration_date,
   0, 0, 0, 0, 0,
   'Cotización generada automáticamente'
 FROM generate_series(1, 1500) gs
@@ -159,8 +159,8 @@ SELECT
   (SELECT id FROM customers ORDER BY random() LIMIT 1) AS customer_id,
   (SELECT id FROM quotes ORDER BY random() LIMIT 1) AS quote_id,
   (ARRAY['DRAFT', 'ISSUED', 'PAID', 'PARTIALLY_PAID'])[1 + floor(random() * 4)] AS status,
-  NOW() - (random() * 30 || ' days')::interval AS issue_date,
-  NOW() + (random() * 30 || ' days')::interval AS due_date,
+  NOW() - (random() * 30) * interval '1 day' AS issue_date,
+  NOW() + (random() * 30) * interval '1 day' AS due_date,
   0, 0, 0, 0,
   (ARRAY['31', '32'])[1 + floor(random() * 2)] AS ncf_type
 FROM generate_series(1, 900)
@@ -224,12 +224,13 @@ SELECT
 FROM (
   SELECT id, customer_id, total
   FROM invoices
+  WHERE total > 0
   ORDER BY random()
   LIMIT 600
 ) i
 JOIN generate_series(1, 600) gs ON true
 JOIN LATERAL (
-  SELECT round((i.total * (0.3 + random() * 0.7))::numeric, 2) AS amount
+  SELECT GREATEST(round((i.total * (0.3 + random() * 0.7))::numeric, 2), 0.01) AS amount
 ) amt ON true;
 
 -- Aplicar pagos a facturas usando la función transaccional
@@ -286,7 +287,7 @@ JOIN LATERAL (
 INSERT INTO delivery_records (proforma_id, delivery_date, driver_name, vehicle_plate, notes)
 SELECT
   p.id,
-  NOW() - (random() * 10 || ' days')::interval,
+  NOW() - (random() * 10) * interval '1 day',
   'Chofer ' || lpad(gs::text, 3, '0'),
   'A' || lpad(gs::text, 3, '0') || 'B' || lpad(gs::text, 2, '0'),
   'Entrega generada automáticamente'
@@ -312,23 +313,5 @@ FROM generate_series(1, 1200);
 -- ============================================
 -- ANALYTICS (KPIs)
 -- ============================================
-INSERT INTO kpi_daily_snapshots (date, total_sales, total_collected, total_invoiced_count, dso_days)
-SELECT
-  (CURRENT_DATE - gs)::date AS date,
-  round((random() * 250000)::numeric, 2) AS total_sales,
-  round((random() * 200000)::numeric, 2) AS total_collected,
-  (100 + floor(random() * 200))::int AS total_invoiced_count,
-  round((20 + random() * 30)::numeric, 2) AS dso_days
-FROM generate_series(0, 180) gs
-ON CONFLICT (date) DO NOTHING;
-
-INSERT INTO sales_by_category (category, month, total_amount)
-SELECT
-  category,
-  date_trunc('month', CURRENT_DATE - (gs || ' months')::interval)::date AS month,
-  round((random() * 500000)::numeric, 2) AS total_amount
-FROM (
-  SELECT DISTINCT category FROM service_items
-) c
-CROSS JOIN generate_series(0, 12) gs
-ON CONFLICT (category, month) DO NOTHING;
+-- Nota: Seeding de analytics deshabilitado intencionalmente.
+-- Si lo necesitas luego, crea una migración/seed aparte para analytics.

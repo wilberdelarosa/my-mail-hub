@@ -243,7 +243,7 @@ Jaeger:         http://localhost:16686
 **2. Production (Documentado)** 📋
 - ✅ Guía completa: `docs/DEPLOYMENT_GUIDE.md`
 - ✅ Arquitectura cloud: `docs/PRODUCTION_ARCHITECTURE.md`
-- ✅ Script automatizado: `deploy.ps1`
+- ✅ Script automatizado: `scripts/06_deploy/deploy.ps1`
 
 **Stack Producción:**
 - Supabase Cloud (Database)
@@ -260,7 +260,7 @@ Jaeger:         http://localhost:16686
 
 **Estado:**
 - ✅ Tests unitarios creados (Quotation, Billing)
-- ✅ Script de ejecución (`run-all-tests.ps1`)
+- ✅ Script de ejecución (`scripts/05_test/run-all-tests.ps1`)
 - 🚧 Tests requieren configuración adicional
 - 🚧 Mocks y fixtures pendientes
 
@@ -379,16 +379,16 @@ Jaeger:         http://localhost:16686
 ### Scripts Útiles
 ```bash
 # Build all services
-.\build-all-services.ps1
+.\scripts\04_build\build-all-services.ps1
 
 # Start all services
-.\start-all-services.ps1
+.\scripts\03_dev\start-all-services.ps1
 
 # Run tests
-.\run-all-tests.ps1
+.\scripts\05_test\run-all-tests.ps1
 
 # Deploy
-.\deploy.ps1
+.\scripts\06_deploy\deploy.ps1
 ```
 
 ### Enlaces Importantes

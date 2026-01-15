@@ -106,16 +106,16 @@ graph LR
 ### Diagnóstico
 - Node.js v24.13.0 instalado en `C:\Program Files\nodejs\`
 - PATH de Windows apuntaba a `C:\Program Files (x86)\nodejs\` (NO EXISTE)
-- Solución: Script `fix-node-path.ps1` corrige el PATH temporalmente
+- Solución: Script `scripts/01_fix/fix-node-path.ps1` corrige el PATH temporalmente
 
 ### Scripts de Utilidad Creados
 
 | Script | Función |
 |--------|---------|
-| `fix-node-path.ps1` | Corrige PATH en sesión actual |
-| `fix-node-path-permanent.ps1` | Corrige PATH permanentemente (requiere Admin) |
-| `build-all.ps1` | Compila todos los servicios |
-| `start-all-services.ps1` | Inicia todos los servicios en jobs |
+| `scripts/01_fix/fix-node-path.ps1` | Corrige PATH en sesión actual |
+| `scripts/01_fix/fix-node-path-permanent.ps1` | Corrige PATH permanentemente (requiere Admin) |
+| `scripts/04_build/build-all.ps1` | Compila todos los servicios |
+| `scripts/03_dev/start-all-services.ps1` | Inicia todos los servicios en jobs |
 
 ---
 
@@ -184,7 +184,7 @@ $env:PATH = "C:\Program Files\nodejs;$env:PATH"
 
 ### 2. Compilar todos los servicios
 ```powershell
-.\build-all.ps1
+.\scripts\04_build\build-all.ps1
 ```
 
 ### 3. Iniciar servicios individualmente
@@ -195,7 +195,7 @@ npm run start:dev
 
 ### 4. O iniciar todos a la vez
 ```powershell
-.\start-all-services.ps1
+.\scripts\03_dev\start-all-services.ps1
 ```
 
 ### 5. Web App

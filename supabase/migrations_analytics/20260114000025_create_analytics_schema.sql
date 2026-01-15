@@ -2,6 +2,9 @@
 -- ANALYTICS SCHEMA - Data Mart para BI
 -- =====================================================
 
+-- Create schema (idempotent - already created in migration 008)
+CREATE SCHEMA IF NOT EXISTS analytics;
+
 -- Tabla de Hechos: Fact Sales (Ventas)
 CREATE TABLE IF NOT EXISTS analytics.fact_sales (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -145,9 +148,9 @@ CREATE INDEX IF NOT EXISTS idx_kpi_summary_period ON analytics.kpi_summary(perio
 CREATE OR REPLACE FUNCTION analytics.populate_dim_date(start_date DATE, end_date DATE)
 RETURNS VOID AS $$
 DECLARE
-    current_date DATE := start_date;
+    iter_date DATE := start_date;
 BEGIN
-    WHILE current_date <= end_date LOOP
+    WHILE iter_date <= end_date LOOP
         INSERT INTO analytics.dim_date (
             date_key,
             full_date,
@@ -161,21 +164,21 @@ BEGIN
             day_name,
             is_weekend
         ) VALUES (
-            TO_CHAR(current_date, 'YYYYMMDD')::INTEGER,
-            current_date,
-            EXTRACT(YEAR FROM current_date)::INTEGER,
-            EXTRACT(QUARTER FROM current_date)::INTEGER,
-            EXTRACT(MONTH FROM current_date)::INTEGER,
-            TO_CHAR(current_date, 'Month'),
-            EXTRACT(WEEK FROM current_date)::INTEGER,
-            EXTRACT(DAY FROM current_date)::INTEGER,
-            EXTRACT(DOW FROM current_date)::INTEGER,
-            TO_CHAR(current_date, 'Day'),
-            EXTRACT(DOW FROM current_date) IN (0, 6)
+            TO_CHAR(iter_date, 'YYYYMMDD')::INTEGER,
+            iter_date,
+            EXTRACT(YEAR FROM iter_date)::INTEGER,
+            EXTRACT(QUARTER FROM iter_date)::INTEGER,
+            EXTRACT(MONTH FROM iter_date)::INTEGER,
+            TO_CHAR(iter_date, 'Month'),
+            EXTRACT(WEEK FROM iter_date)::INTEGER,
+            EXTRACT(DAY FROM iter_date)::INTEGER,
+            EXTRACT(DOW FROM iter_date)::INTEGER,
+            TO_CHAR(iter_date, 'Day'),
+            EXTRACT(DOW FROM iter_date) IN (0, 6)
         )
         ON CONFLICT (date_key) DO NOTHING;
         
-        current_date := current_date + INTERVAL '1 day';
+        iter_date := iter_date + INTERVAL '1 day';
     END LOOP;
 END;
 $$ LANGUAGE plpgsql;
@@ -219,11 +222,11 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION analytics.update_monthly_kpis(p_year INTEGER, p_month INTEGER)
 RETURNS VOID AS $$
 DECLARE
-    period_key VARCHAR(20);
+    v_period_key VARCHAR(20);
     period_start DATE;
     period_end DATE;
 BEGIN
-    period_key := p_year || '-' || LPAD(p_month::TEXT, 2, '0');
+    v_period_key := p_year || '-' || LPAD(p_month::TEXT, 2, '0');
     period_start := (p_year || '-' || p_month || '-01')::DATE;
     period_end := (period_start + INTERVAL '1 month' - INTERVAL '1 day')::DATE;
     
@@ -243,7 +246,7 @@ BEGIN
     )
     SELECT
         'monthly',
-        period_key,
+        v_period_key,
         COALESCE(SUM(q.total), 0) as total_quotes,
         COALESCE(SUM(i.total), 0) as total_invoices,
         COALESCE(SUM(p.amount), 0) as total_payments,
